@@ -1,0 +1,62 @@
+[
+  {
+    "name": "sapling",
+    "min": 0,
+    "max": 10,
+    "url": "/assets/sapling.jpg"
+  },
+  {
+    "name": "toddler",
+    "min": 11,
+    "max": 25,
+    "url": "/assets/toddler.jpg"
+  },
+  {
+    "name": "adolescent",
+    "min": 26,
+    "max": 99,
+    "url": "/assets/adolescent.png"
+  },
+  {
+    "name": "preadult",
+    "min": 100,
+    "max": 499,
+    "url": "/assets/preadult.jpg"
+  },
+  {
+    "name": "adult",
+    "min": 500,
+    "max": 1499,
+    "url": "/assets/adult.jpg"
+  },
+  {
+    "name": "college",
+    "min": 1500,
+    "max": 4999,
+    "url": "/assets/college.png"
+  },
+  {
+    "name": "graduate",
+    "min": 5000,
+    "max": 10999,
+    "url": "/assets/graduate.jpg"
+  },
+  {
+    "name": "postdoc",
+    "min": 11000,
+    "max": 19999,
+    "url": "/assets/graduate.jpg"
+  },
+  {
+    "name": "senior",
+    "min": 20000,
+    "max": 49999,
+    "url": "/assets/senior.jpg"
+  },
+  {
+    "name": "beanstalk",
+    "min": 50000,
+    "max": 50000,
+    "url": "/assets/beanstalk.jpg"
+  }
+]
