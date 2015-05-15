@@ -46,7 +46,7 @@ describe('GET /trees', function(){
   it('should return 3 trees', function(done){
     server.inject({method: 'GET', url: '/trees', credentials: {_id: 'a00000000000000000000001'}}, function(response){
       expect(response.statusCode).to.equal(200);
-      expect(response.result.trees).to.have.length(3);
+      expect(response.result.trees).to.have.length(4);
       done();
     });
   });

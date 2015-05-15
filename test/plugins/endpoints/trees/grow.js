@@ -52,6 +52,32 @@ describe('PUT /trees/{treeId}/grow', function(){
     });
   });
 
+  it('should cap the odds at 90%', function(done){
+    server.inject({method: 'PUT', url: '/trees/f00000000000000000000001/grow', credentials: {_id: 'a00000000000000000000001'}}, function(response){
+      expect(response.statusCode).to.equal(200);
+      done();
+    });
+  });
+
+  it('should cap the height at 50000', function(done){
+    server.inject({method: 'PUT', url: '/trees/f00000000000000000000003/grow', credentials: {_id: 'a00000000000000000000001'}}, function(response){
+      expect(response.statusCode).to.equal(200);
+      expect(response.result.height).to.equal(50000);
+      done();
+    });
+  });
+
+  it('should remove dead tree', function(done){
+    server.inject({method: 'PUT', url: '/trees/f00000000000000000000004/grow', credentials: {_id: 'a00000000000000000000001'}}, function(response){
+      expect(response.statusCode).to.equal(200);
+      Tree.findById('f00000000000000000000004', function(err, tree){
+        expect(err).to.be.null;
+        expect(tree).to.be.null;
+        done();
+      });
+    });
+  });
+
   it('should cause damage', function(done){
     var stub = Sinon.stub(Math, 'random');
     stub.onCall(0).returns(0).onCall(1).returns(0.5);
@@ -74,9 +100,27 @@ describe('PUT /trees/{treeId}/grow', function(){
     });
   });
 
-  it('should cause db error', function(done){
+  it('should cause db find error', function(done){
     var stub = Sinon.stub(Tree, 'findOne').yields(new Error());
     server.inject({method: 'PUT', url: '/trees/f00000000000000000000002/grow', credentials: {_id: 'a00000000000000000000001'}}, function(response){
+      expect(response.statusCode).to.equal(400);
+      stub.restore();
+      done();
+    });
+  });
+
+  it('should cause db save error', function(done){
+    var stub = Sinon.stub(Tree.prototype, 'save').yields(new Error());
+    server.inject({method: 'PUT', url: '/trees/f00000000000000000000002/grow', credentials: {_id: 'a00000000000000000000001'}}, function(response){
+      expect(response.statusCode).to.equal(400);
+      stub.restore();
+      done();
+    });
+  });
+
+  it('should cause db remove error', function(done){
+    var stub = Sinon.stub(Tree.prototype, 'remove').yields(new Error());
+    server.inject({method: 'PUT', url: '/trees/f00000000000000000000004/grow', credentials: {_id: 'a00000000000000000000001'}}, function(response){
       expect(response.statusCode).to.equal(400);
       stub.restore();
       done();
